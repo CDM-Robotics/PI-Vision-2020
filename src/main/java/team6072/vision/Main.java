@@ -154,5 +154,5 @@ public final class Main {
  * 2) Kill the current PipelineThreads and UpdateListenerThreads, 
  *      this will be a function in the pipelineMasterSystem that simply runs through the array of pipelineThreads
  *      and updateListenerThreads and kills them... one by one
- * 3) restart the PipelineThreads and UpdateListenerThreads with the new CvSink Array.
+ * 3) restart the PipelineThreads and UpdateListenerThreads with the new CvSink Array. 
  */
