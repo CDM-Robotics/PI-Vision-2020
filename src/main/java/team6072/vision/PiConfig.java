@@ -5,7 +5,6 @@ import com.google.gson.JsonParser;
 import java.io.IOException;
 import team6072.vision.logging.LogWrapper;
 import team6072.vision.logging.LogWrapper.FileType;
-import team6072.vision.logging.LogWrapper.Permission;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import com.google.gson.JsonObject;

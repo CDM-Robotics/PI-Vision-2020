@@ -12,7 +12,6 @@ import team6072.vision.logging.LogWrapper.FileType;
 import com.google.gson.JsonObject;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

@@ -5,13 +5,7 @@ import java.util.ArrayList;
 import team6072.vision.logging.LogWrapper;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.VideoSink;
-import edu.wpi.cscore.VideoSource;
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.cscore.CvSource;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import team6072.vision.nt.NetworkTablesController;
-import org.opencv.core.Mat;
 
 /*
    JSON format:
@@ -121,7 +115,6 @@ public final class Main {
     }
 
     if (cameraSinks.size() > 0) {
-      Mat mat = new Mat();
       for(int i = 0; i < cameraSinks.size(); i++){
         // how do i put unique camera pipelines on these
 
