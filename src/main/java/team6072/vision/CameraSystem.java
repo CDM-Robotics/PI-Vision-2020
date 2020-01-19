@@ -137,7 +137,7 @@ public class CameraSystem {
 
     // starts automatic capture of the frame.  
     // This is the function that does all the capture and sourcing for you.
-    inst.startAutomaticCapture(camera);
+    // inst.startAutomaticCapture(camera);
 
     camera.setConfigJson(gson.toJson(config.config));
     camera.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);

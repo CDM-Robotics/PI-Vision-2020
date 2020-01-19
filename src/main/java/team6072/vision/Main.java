@@ -3,6 +3,7 @@ package team6072.vision;
 import java.util.ArrayList;
 
 import team6072.vision.logging.LogWrapper;
+import team6072.vision.nt.NetworkTablesThread;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -79,12 +80,12 @@ public final class Main {
    *          for example: switching the Cameras
    *              this will require getting the CvSinks, switching them in the array, 
    *                killing the current pipelines in the PipelineMasterSYstem, and then reinitializing the PipelineMaster
-   * Fourth run the PipelineSystem so that the pipelines and updateListeners can start running their threads
-   *    cvsinks are given to the pipelines and the pipelines
-   *    are processing the image
-   *    Then give those pipelines to the UpdateListener threads and create them so that 
-   *    they will run on a loop takign information from
-   *    the pipelines adn feed it to networkTables using the NetworkTablesSystem.
+   * Fourth run the PipelineMaster so that the Vision threads can start running the 
+   *    pipeline and updateListener functions on a loop
+   *    cvsinks are given to the VisionThreads
+   *    pipeline function starts processing the image
+   *    then the UpdateListener function feeds
+   *    information to networkTables using the NetworkTablesSystem.
    */
   public static void main(String... args) {
 
@@ -98,15 +99,8 @@ public final class Main {
     }
 
     // start NetworkTables
-    // NetworkTablesController.getInstance();
-    NetworkTableInstance ntinst = NetworkTableInstance.getDefault();
-    if (mPiConfig.isNTServer()) {
-      mLog.print("Setting up NetworkTables server");
-      ntinst.startServer();
-    } else {
-      mLog.print("Setting up NetworkTables client for team " + mPiConfig.getTeamNumber());
-      ntinst.startClientTeam(mPiConfig.getTeamNumber());
-    }
+    NetworkTablesThread.getInstance();
+    
 
     ArrayList<CvSink> cameraSinks = CameraSystem.getInstance().getCameraSinks();
 
@@ -114,18 +108,24 @@ public final class Main {
       mLog.print("Cameras array number " + i + " : " + cameraSinks.get(i).toString());
     }
 
-    if (cameraSinks.size() > 0) {
-      for(int i = 0; i < cameraSinks.size(); i++){
-        // how do i put unique camera pipelines on these
-
-      }
-    }
-
-    // for(int i = 0; i < cameras.size(); i++){
-    // CvSource source = CameraServer.getInstance().putVideo("PI" + i, 160, 120);
-    // source.putFrame(cameras.get(i));
-
+    NetworkTablesThread.getInstance().start();
+    // for(int i = 0; true; i++){
+    //   NetworkTablesThread.getInstance().entry1.setDouble(i);
+    //   NetworkTablesThread.getInstance().entry2.setDouble(100000 - i);
     // }
+
+
+/*     //EXAMPLE OF THE WIZARDRY **********************
+
+    // if (cameraSinks.size() > 0) {
+    //   source = CameraServer.getInstance().putVideo("Testing image", 320, 240);
+    //   Mat mat = new Mat();
+    //   while(true){
+    //     cameraSinks.get(0).grabFrame(m);
+    //     source.putFrame(m);
+    //   }
+    // } */
+
 
     // loop forever
     for (;;) {
@@ -144,8 +144,8 @@ public final class Main {
  *    -This function will be in the Network Tables System and will be triggered upon the change of a
  *      Network tables value
  * 1) Switch CvSinks in teh CameraSystem, this function should be innside the CameraSYstem
- * 2) Kill the current PipelineThreads and UpdateListenerThreads, 
- *      this will be a function in the pipelineMasterSystem that simply runs through the array of pipelineThreads
- *      and updateListenerThreads and kills them... one by one
- * 3) restart the PipelineThreads and UpdateListenerThreads with the new CvSink Array. 
+ * 2) Kill the current Vision Threads, 
+ *      this will be a function in the pipelineMasterSystem that simply runs through the array of VisionThreads
+ *      and kills them... one by one
+ * 3) restart the VisionThreads with the new CvSink Array. 
  */
