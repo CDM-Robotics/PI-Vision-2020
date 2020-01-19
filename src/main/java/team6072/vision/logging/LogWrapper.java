@@ -21,7 +21,7 @@ public class LogWrapper {
      * The type of file
      */
     public enum FileType {
-        MAIN, PIPELINE, CONFIG, CAMERA_SYSTEM;
+        MAIN, PIPELINE, CONFIG, CAMERA_SYSTEM, NETWORK_TABLES;
     }
 
     /**

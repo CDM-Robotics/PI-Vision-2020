@@ -1,7 +1,17 @@
 package team6072.vision;
 
-import edu.wpi.first.networktables.NetworkTableInstance;
+import java.util.ArrayList;
+
 import team6072.vision.logging.LogWrapper;
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.VideoSink;
+import edu.wpi.cscore.VideoSource;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import team6072.vision.nt.NetworkTablesController;
+import org.opencv.core.Mat;
 
 /*
    JSON format:
@@ -52,6 +62,7 @@ public final class Main {
   private static PiConfig mPiConfig;
   public static int team;
   public static boolean server;
+  public static CvSource source;
 
   private Main() {
   }
@@ -71,8 +82,8 @@ public final class Main {
     }
 
     // start NetworkTables
+    // NetworkTablesController.getInstance();
     NetworkTableInstance ntinst = NetworkTableInstance.getDefault();
-    mLog.print("Starting Network Tables");
     if (mPiConfig.isNTServer()) {
       mLog.print("Setting up NetworkTables server");
       ntinst.startServer();
@@ -81,9 +92,31 @@ public final class Main {
       ntinst.startClientTeam(mPiConfig.getTeamNumber());
     }
 
-    CameraSystem.getInstance();
 
-    // start image processing on camera 0 if present
+    ArrayList<CvSink> cameraSinks = CameraSystem.getInstance().getCameraSinks();
+
+    for(int i = 0; i < cameraSinks.size(); i++){
+      mLog.print("Cameras array number " + i + " : " + cameraSinks.get(i).toString());
+    }
+
+    if(cameraSinks.size() > 0){
+      
+      source = CameraServer.getInstance().putVideo("Testing image", 320, 240);
+      Mat mat = new Mat();
+      while(true){
+        
+        long num = cameraSinks.get(0).grabFrame(mat);
+        mLog.alarm("YOOOOOOOO!!!!");
+        mLog.debug("Timeout", num);
+        source.putFrame(mat);
+      }
+    }
+    
+    // for(int i = 0; i < cameras.size(); i++){
+      // CvSource source = CameraServer.getInstance().putVideo("PI" + i, 160, 120);
+      // source.putFrame(cameras.get(i));
+
+    // }
 
     // loop forever
     for (;;) {
