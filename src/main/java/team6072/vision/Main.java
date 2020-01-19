@@ -80,9 +80,16 @@ public final class Main {
    *    After creating the values, The NetworkTables System must create listeners to certian functions that will
    *    manipulate the pi in ways that are necessary for its functionality.  Like
    *          switching the cameras, or restarting the PIor restarting the threads, etc.
-   * Fourth run the pipelines so that the cvsinks are given to the pipelines and the pipelines
+   *    These functions will run from the NetworkTablesSystem, but will require functions to be created in other 
+   *      branches of the PI
+   *          for example: switching the Cameras
+   *              this will require getting the CvSinks, switching them in the array, 
+   *                killing the current pipelines in the PipelineMasterSYstem, and then reinitializing the PipelineMaster
+   * Fourth run the PipelineSystem so that the pipelines and updateListeners can start running their threads
+   *    cvsinks are given to the pipelines and the pipelines
    *    are processing the image
-   * Then create and run the UpdateListener threads that will run on a loop takign information from
+   *    Then give those pipelines to the UpdateListener threads and create them so that 
+   *    they will run on a loop takign information from
    *    the pipelines adn feed it to networkTables using the NetworkTablesSystem.
    */
   public static void main(String... args) {
@@ -137,3 +144,15 @@ public final class Main {
     }
   }
 }
+
+
+/**
+ * Switch Cameras function 
+ *    -This function will be in the Network Tables System and will be triggered upon the change of a
+ *      Network tables value
+ * 1) Switch CvSinks in teh CameraSystem, this function should be innside the CameraSYstem
+ * 2) Kill the current PipelineThreads and UpdateListenerThreads, 
+ *      this will be a function in the pipelineMasterSystem that simply runs through the array of pipelineThreads
+ *      and updateListenerThreads and kills them... one by one
+ * 3) restart the PipelineThreads and UpdateListenerThreads with the new CvSink Array.
+ */
