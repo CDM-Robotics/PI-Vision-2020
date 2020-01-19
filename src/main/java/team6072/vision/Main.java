@@ -69,6 +69,21 @@ public final class Main {
 
   /**
    * Main.
+   * This function starts the Pi's other threads and leads it to GLORY inn the following way
+   * 
+   * first, the main function must take the information from PiConfig and parse out the existing CameraConfigs
+   *    this is handled, right now, with the class PiConfig.  I may make it More organized later
+   * two, it then must use the cameraConfigs from PiConfig to create the required USBCameras it needs,
+   *    and then from there it must create CvSinks from the VideoSources from USBCameras.  
+   *        This is handled right now with CameraSystem.java.  Will make it more organized later.
+   * Third, it then must initialized Network Tables and initialize the values that will go on to control the PI
+   *    After creating the values, The NetworkTables System must create listeners to certian functions that will
+   *    manipulate the pi in ways that are necessary for its functionality.  Like
+   *          switching the cameras, or restarting the PIor restarting the threads, etc.
+   * Fourth run the pipelines so that the cvsinks are given to the pipelines and the pipelines
+   *    are processing the image
+   * Then create and run the UpdateListener threads that will run on a loop takign information from
+   *    the pipelines adn feed it to networkTables using the NetworkTablesSystem.
    */
   public static void main(String... args) {
 
@@ -92,29 +107,23 @@ public final class Main {
       ntinst.startClientTeam(mPiConfig.getTeamNumber());
     }
 
-
     ArrayList<CvSink> cameraSinks = CameraSystem.getInstance().getCameraSinks();
 
-    for(int i = 0; i < cameraSinks.size(); i++){
+    for (int i = 0; i < cameraSinks.size(); i++) {
       mLog.print("Cameras array number " + i + " : " + cameraSinks.get(i).toString());
     }
 
-    if(cameraSinks.size() > 0){
-      
-      source = CameraServer.getInstance().putVideo("Testing image", 320, 240);
+    if (cameraSinks.size() > 0) {
       Mat mat = new Mat();
-      while(true){
-        
-        long num = cameraSinks.get(0).grabFrame(mat);
-        mLog.alarm("YOOOOOOOO!!!!");
-        mLog.debug("Timeout", num);
-        source.putFrame(mat);
+      for(int i = 0; i < cameraSinks.size(); i++){
+        // how do i put unique camera pipelines on these
+
       }
     }
-    
+
     // for(int i = 0; i < cameras.size(); i++){
-      // CvSource source = CameraServer.getInstance().putVideo("PI" + i, 160, 120);
-      // source.putFrame(cameras.get(i));
+    // CvSource source = CameraServer.getInstance().putVideo("PI" + i, 160, 120);
+    // source.putFrame(cameras.get(i));
 
     // }
 

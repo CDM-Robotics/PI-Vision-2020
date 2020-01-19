@@ -12,6 +12,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
 import team6072.vision.logging.LoggerConstants;
 
+/**
+ * This class handles all the innformation that is pulled from the PI's configuration. 
+ * The Pi's configuration is set and saved on the frcvision webpage and 
+ */
 public class PiConfig {
 
   private LogWrapper mLog;

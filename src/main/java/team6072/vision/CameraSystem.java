@@ -17,6 +17,11 @@ import edu.wpi.cscore.UsbCamera;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+/**
+ * The main purpose of this class is to simply take the starting camera configurations from the 
+ * PiConfig class and change them into UsbCameras and from Usbcameras into CvSinks.  From there
+ * we can use CvSinks to get all the frames that we need.
+ */
 public class CameraSystem {
 
   private static CameraSystem mSystem;
@@ -130,7 +135,10 @@ public class CameraSystem {
 
     CameraServer inst = CameraServer.getInstance();
     Gson gson = new GsonBuilder().create();
-    MjpegServer server = inst.startAutomaticCapture(camera);
+
+    // starts automatic capture of the frame.  
+    // This is the function that does all the capture and sourcing for you.
+    inst.startAutomaticCapture(camera);
 
     camera.setConfigJson(gson.toJson(config.config));
     camera.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
