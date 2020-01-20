@@ -1,4 +1,4 @@
-package team6072.vision.configs;
+package team6072.vision.cameras;
 
 public class SwitchedCameraConfig {
     public String name;

@@ -2,8 +2,6 @@ package team6072.vision.nt.onChangeListeners;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableValue;
-import team6072.vision.CameraMaster;
-import team6072.vision.visionProcessing.VisionThreadMaster;
 
 public abstract class NTOnChangeListener{
 

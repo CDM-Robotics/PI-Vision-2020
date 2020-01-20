@@ -3,7 +3,7 @@ package team6072.vision.visionProcessing;
 import java.util.ArrayList;
 
 import edu.wpi.cscore.CvSink;
-import team6072.vision.CameraMaster;
+import team6072.vision.cameras.CameraMaster;
 import team6072.vision.logging.LogWrapper;
 import team6072.vision.logging.LoggerConstants;
 import team6072.vision.logging.LogWrapper.FileType;

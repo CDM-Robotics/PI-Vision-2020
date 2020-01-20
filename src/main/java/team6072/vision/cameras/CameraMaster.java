@@ -1,9 +1,8 @@
-package team6072.vision;
+package team6072.vision.cameras;
 
-import team6072.vision.configs.CameraConfig;
+import team6072.vision.cameras.CameraConfig;
 import team6072.vision.logging.LogWrapper;
 import team6072.vision.logging.LoggerConstants;
-import team6072.vision.configs.SwitchedCameraConfig;
 import edu.wpi.cscore.VideoSource;
 import java.util.ArrayList;
 import com.google.gson.JsonArray;
@@ -82,6 +81,49 @@ public class CameraMaster {
   /**
    * Reads the file on the raspberry pi of Camera Configs and returns the
    * information as a Json Array
+   * 
+   * 
+   JSON format:
+   {
+       "team": <team number>,
+       "ntmode": <"client" or "server", "client" if unspecified>
+       "cameras": [
+           {
+               "name": <camera name>
+               "path": <path, e.g. "/dev/video0">
+               "pixel format": <"MJPEG", "YUYV", etc>   // optional
+               "width": <video mode width>              // optional
+               "height": <video mode height>            // optional
+               "fps": <video mode fps>                  // optional
+               "brightness": <percentage brightness>    // optional
+               "white balance": <"auto", "hold", value> // optional
+               "exposure": <"auto", "hold", value>      // optional
+               "properties": [                          // optional
+                   {
+                       "name": <property name>
+                       "value": <property value>
+                   }
+               ],
+               "stream": {                              // optional
+                   "properties": [
+                       {
+                           "name": <stream property name>
+                           "value": <stream property value>
+                       }
+                   ]
+               }
+           }
+       ]
+       "switched cameras": [
+           {
+               "name": <virtual camera name>
+               "key": <network table key used for selection>
+               // if NT value is a string, it's treated as a name
+               // if NT value is a double, it's treated as an integer index
+           }
+       ]
+   }
+ 
    * 
    * @return
    */
