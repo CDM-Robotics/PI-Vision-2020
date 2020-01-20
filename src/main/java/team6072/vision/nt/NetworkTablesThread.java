@@ -19,7 +19,7 @@ public class NetworkTablesThread extends Thread {
   private NetworkTableInstance ntinst;
   private NetworkTable mVisionTable;
   public NetworkTableEntry entry1;
-  public NetworkTableEntry entry2;
+  public NetworkTableEntry entry2; 
   public NetworkTableEntry entry3;
   public NetworkTableEntry entry4;
 
