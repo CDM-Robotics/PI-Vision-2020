@@ -90,10 +90,10 @@ public final class Main {
     mLog = new LogWrapper(LogWrapper.FileType.MAIN, "Main", LogWrapper.Permission.ALL);
 
     CameraMaster.getInstance();
+    CameraMaster.getInstance().startAutomaticCapture();
     // start NetworkTables
     NetworkTablesThread.getInstance();
     
-    CameraMaster.getInstance().startAutomaticCapture();
 
 /*     //EXAMPLE OF THE WIZARDRY **********************
 
