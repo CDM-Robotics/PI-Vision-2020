@@ -1,9 +1,13 @@
 package team6072.vision.nt;
 
+import java.util.ArrayList;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import team6072.vision.logging.LogWrapper;
+import team6072.vision.nt.onChangeListeners.NTOnChangeListener;
+import team6072.vision.nt.onChangeListeners.NTSwitchCamerasListener;
 import team6072.vision.logging.LoggerConstants;
 import team6072.vision.logging.LogWrapper.FileType;
 
@@ -12,20 +16,16 @@ import team6072.vision.logging.LogWrapper.FileType;
  */
 public class NetworkTablesThread extends Thread {
 
+  // standard Variables //
   private static NetworkTablesThread mNetworkTablesController;
   private LogWrapper mLog;
+  public boolean mRunnable = true;
 
+  // Network Tables Variables //
   private NetworkTableInstance ntinst;
   private NetworkTable mVisionTable;
-  public NetworkTableEntry entry1;
-  public NetworkTableEntry entry2;
-  public NetworkTableEntry entry3;
-  public NetworkTableEntry entry4;
+  private ArrayList<NTOnChangeListener> mListeners;
 
-  public double priorEntry3;
-  public double priorEntry4;
-
-  public boolean mRunnable = true;
 
   public static NetworkTablesThread getInstance() {
     if (mNetworkTablesController == null) {
@@ -36,36 +36,25 @@ public class NetworkTablesThread extends Thread {
 
   private NetworkTablesThread() {
     mLog = new LogWrapper(FileType.NETWORK_TABLES, "Network Tables Thread", LoggerConstants.NETWORK_TABLES_PERMISSION);
+    
+    // initializing Network Tables //
     ntinst = NetworkTableInstance.getDefault();
+    mListeners = new ArrayList<NTOnChangeListener>();
+    mVisionTable = ntinst.getTable("Vision Table");
+
     mLog.print("Setting up NetworkTables client for team " + 6072);
     ntinst.startClientTeam(6072);
 
-    mVisionTable = ntinst.getTable("Vision Table");
-    entry1 = mVisionTable.getEntry("entry1");
-    entry2 = mVisionTable.getEntry("entry2");
-    entry3 = mVisionTable.getEntry("entry3");
-    entry4 = mVisionTable.getEntry("entry4");
+    // initializing Entries //
 
-    entry3.setDouble(4);
-    entry4.setDouble(85);
+    // initializing listeners tp the mListeners Array //
 
-    // priorEntry3 = entry3.getDouble(0);
-    // priorEntry4 = entry4.getDouble(0);
   }
 
   public void run() {
     while (mRunnable) {
-      double curnEntry3 = entry3.getDouble(priorEntry3);
-      double curnEntry4 = entry4.getDouble(priorEntry4);
-      if (curnEntry3 != priorEntry3) {
-        mLog.alarm("Entry 3 has Changed!");
-        mLog.debug("Entry3", curnEntry3);
-        priorEntry3 = curnEntry3;
-      }
-      if (curnEntry4 != priorEntry4) {
-        mLog.alarm("Entry 4 has Changed!");
-        mLog.debug("Entry4", curnEntry4);
-        priorEntry4 = curnEntry4;
+      for(NTOnChangeListener ntOnChangeListener : mListeners){
+        ntOnChangeListener.checkState();
       }
     }
   }

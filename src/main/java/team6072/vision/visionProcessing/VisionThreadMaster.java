@@ -36,11 +36,10 @@ public class VisionThreadMaster{
         if(sinks.size() >= 2){
             mThreads.add(new VisionThread(sinks.get(0), new TurretPipeline(), new TurretUpdateListener()));
             mThreads.add(new VisionThread(sinks.get(1), new IntakePipeline(), new IntakeUpdateListener()));
-            
+
             for(int i = 0; i < mThreads.size(); i++){
                 mThreads.get(i).start();
             }
-
         } else {
             mLog.error("NOT ENOUGH CAMERAS TO INITIATE VISION THREADS");
         }

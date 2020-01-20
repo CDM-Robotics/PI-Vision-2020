@@ -23,7 +23,7 @@ public class VisionThread extends Thread{
         while(mRunnable){
             mCvSink.grabFrame(m);
             mPipeline.process(m);
-            mUpdateListener.updateNetworkTables();
+            mUpdateListener.updateNetworkTables(mPipeline);
         }
     }
 

@@ -31,10 +31,9 @@ public class CameraMaster {
 
   private static CameraMaster mSystem;
   private LogWrapper mLog;
-  public ArrayList<CameraConfig> cameraConfigs;
-  public ArrayList<SwitchedCameraConfig> switchedCameraConfigs;
-  public ArrayList<VideoSource> videoSources;
-  public ArrayList<CvSink> cameraSinks;
+  private ArrayList<CameraConfig> cameraConfigs;
+  private ArrayList<VideoSource> videoSources;
+  private ArrayList<CvSink> cameraSinks;
 
   private String configFile = "/boot/frc.json";
 
