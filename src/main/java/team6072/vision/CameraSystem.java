@@ -132,11 +132,11 @@ public class CameraSystem {
     mLog.print("Starting camera '" + config.name + "' on " + config.path);
     UsbCamera camera = new UsbCamera(config.name, config.path);
 
-    CameraServer inst = CameraServer.getInstance();
     Gson gson = new GsonBuilder().create();
 
     // starts automatic capture of the frame.  
     // This is the function that does all the capture and sourcing for you.
+    // CameraServer inst = CameraServer.getInstance();
     // inst.startAutomaticCapture(camera);
 
     camera.setConfigJson(gson.toJson(config.config));

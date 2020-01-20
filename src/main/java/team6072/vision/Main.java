@@ -109,10 +109,10 @@ public final class Main {
     }
 
     NetworkTablesThread.getInstance().start();
-    // for(int i = 0; true; i++){
-    //   NetworkTablesThread.getInstance().entry1.setDouble(i);
-    //   NetworkTablesThread.getInstance().entry2.setDouble(100000 - i);
-    // }
+    for(int i = 0; true; i++){
+      NetworkTablesThread.getInstance().entry1.setDouble(i);
+      NetworkTablesThread.getInstance().entry2.setDouble(100000 - i);
+    }
 
 
 /*     //EXAMPLE OF THE WIZARDRY **********************
@@ -128,13 +128,13 @@ public final class Main {
 
 
     // loop forever
-    for (;;) {
-      try {
-        Thread.sleep(10000);
-      } catch (InterruptedException ex) {
-        return;
-      }
-    }
+    // for (;;) {
+    //   try {
+    //     Thread.sleep(10000);
+    //   } catch (InterruptedException ex) {
+    //     return;
+    //   }
+    // }
   }
 }
 
