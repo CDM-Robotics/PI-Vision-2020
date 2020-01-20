@@ -6,7 +6,6 @@ import team6072.vision.logging.LogWrapper;
 import team6072.vision.nt.NetworkTablesThread;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
-import edu.wpi.first.networktables.NetworkTableInstance;
 
 /*
    JSON format:
@@ -54,7 +53,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 public final class Main {
 
   private static LogWrapper mLog;
-  private static PiConfig mPiConfig;
   public static int team;
   public static boolean server;
   public static CvSource source;
@@ -91,29 +89,11 @@ public final class Main {
 
     mLog = new LogWrapper(LogWrapper.FileType.MAIN, "Main", LogWrapper.Permission.ALL);
 
-    // read configuration
-    mLog.print("Reading PI Configuration");
-    mPiConfig = PiConfig.getInstance();
-    if (!mPiConfig.isInitialized()) {
-      return;
-    }
-
+    CameraMaster.getInstance();
     // start NetworkTables
     NetworkTablesThread.getInstance();
     
-
-    ArrayList<CvSink> cameraSinks = CameraSystem.getInstance().getCameraSinks();
-
-    for (int i = 0; i < cameraSinks.size(); i++) {
-      mLog.print("Cameras array number " + i + " : " + cameraSinks.get(i).toString());
-    }
-
-    NetworkTablesThread.getInstance().start();
-    for(int i = 0; true; i++){
-      NetworkTablesThread.getInstance().entry1.setDouble(i);
-      NetworkTablesThread.getInstance().entry2.setDouble(100000 - i);
-    }
-
+    CameraMaster.getInstance().startAutomaticCapture();
 
 /*     //EXAMPLE OF THE WIZARDRY **********************
 
@@ -128,13 +108,13 @@ public final class Main {
 
 
     // loop forever
-    // for (;;) {
-    //   try {
-    //     Thread.sleep(10000);
-    //   } catch (InterruptedException ex) {
-    //     return;
-    //   }
-    // }
+    for (;;) {
+      try {
+        Thread.sleep(10000);
+      } catch (InterruptedException ex) {
+        return;
+      }
+    }
   }
 }
 

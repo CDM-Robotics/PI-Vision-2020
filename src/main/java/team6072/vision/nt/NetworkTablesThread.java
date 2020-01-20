@@ -3,7 +3,6 @@ package team6072.vision.nt;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import team6072.vision.PiConfig;
 import team6072.vision.logging.LogWrapper;
 import team6072.vision.logging.LoggerConstants;
 import team6072.vision.logging.LogWrapper.FileType;
@@ -38,15 +37,8 @@ public class NetworkTablesThread extends Thread {
   private NetworkTablesThread() {
     mLog = new LogWrapper(FileType.NETWORK_TABLES, "Network Tables Thread", LoggerConstants.NETWORK_TABLES_PERMISSION);
     ntinst = NetworkTableInstance.getDefault();
-    PiConfig mPiConfig = PiConfig.getInstance();
-    mLog.print("Starting Network Tables");
-    if (mPiConfig.isNTServer()) {
-      mLog.print("Setting up NetworkTables server");
-      ntinst.startServer();
-    } else {
-      mLog.print("Setting up NetworkTables client for team " + mPiConfig.getTeamNumber());
-      ntinst.startClientTeam(mPiConfig.getTeamNumber());
-    }
+    mLog.print("Setting up NetworkTables client for team " + 6072);
+    ntinst.startClientTeam(6072);
 
     mVisionTable = ntinst.getTable("Vision Table");
     entry1 = mVisionTable.getEntry("entry1");
