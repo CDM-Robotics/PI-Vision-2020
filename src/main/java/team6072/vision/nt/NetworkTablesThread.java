@@ -26,7 +26,6 @@ public class NetworkTablesThread extends Thread {
   private NetworkTable mVisionTable;
   private ArrayList<NTOnChangeListener> mListeners;
 
-
   public static NetworkTablesThread getInstance() {
     if (mNetworkTablesController == null) {
       mNetworkTablesController = new NetworkTablesThread();
@@ -36,14 +35,16 @@ public class NetworkTablesThread extends Thread {
 
   private NetworkTablesThread() {
     mLog = new LogWrapper(FileType.NETWORK_TABLES, "Network Tables Thread", LoggerConstants.NETWORK_TABLES_PERMISSION);
-    
+
     // initializing Network Tables //
     ntinst = NetworkTableInstance.getDefault();
-    mListeners = new ArrayList<NTOnChangeListener>();
-    mVisionTable = ntinst.getTable("Vision Table");
 
     mLog.print("Setting up NetworkTables client for team " + 6072);
     ntinst.startClientTeam(6072);
+    
+    mListeners = new ArrayList<NTOnChangeListener>();
+    mVisionTable = ntinst.getTable("Vision Table");
+
 
     // initializing Entries //
 
@@ -53,13 +54,13 @@ public class NetworkTablesThread extends Thread {
 
   public void run() {
     while (mRunnable) {
-      for(NTOnChangeListener ntOnChangeListener : mListeners){
+      for (NTOnChangeListener ntOnChangeListener : mListeners) {
         ntOnChangeListener.checkState();
       }
     }
   }
 
-  public void end(){
+  public void end() {
     mRunnable = false;
   }
 

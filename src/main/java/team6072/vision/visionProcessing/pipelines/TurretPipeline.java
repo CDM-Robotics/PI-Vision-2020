@@ -4,8 +4,12 @@ import org.opencv.core.Mat;
 
 public class TurretPipeline extends Pipeline{
 
-    public void process(Mat m){
+    public TurretPipeline(){
+        
+    }
 
+    public Mat process(Mat m){
+        return m;
     }
 
 

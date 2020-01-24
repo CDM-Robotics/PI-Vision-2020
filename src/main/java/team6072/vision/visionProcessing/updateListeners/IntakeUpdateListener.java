@@ -1,6 +1,6 @@
 package team6072.vision.visionProcessing.updateListeners;
 
-import team6072.vision.visionProcessing.pipelines.Pipeline;
+import org.opencv.core.Mat;
 
 public class IntakeUpdateListener extends UpdateListener{
 
@@ -8,7 +8,7 @@ public class IntakeUpdateListener extends UpdateListener{
 
     }
 
-    public void updateNetworkTables(Pipeline pipeline){
+    public void updateNetworkTables(Mat mat){
         
     }
 

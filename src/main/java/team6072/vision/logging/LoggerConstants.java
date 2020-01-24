@@ -15,4 +15,8 @@ public class LoggerConstants{
     // Pipelines //
     public static final Permission PIPELINE_MASTER_PERMISSION = Permission.ALL;
 
+    // Vision Threads //\
+    public static final Permission VISION_THREAD_PERMISSION = Permission.ALL;
+
+
 }
