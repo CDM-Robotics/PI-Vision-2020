@@ -1,4 +1,4 @@
-package team6072.vision.configs;
+package team6072.vision.cameras;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonElement;
