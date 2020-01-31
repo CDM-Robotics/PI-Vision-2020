@@ -48,12 +48,9 @@ public final class Main {
 
     CameraMaster.getInstance();
     NetworkTablesThread.getInstance();
-    CameraMaster.getInstance().startAutomaticCapture();
+    // CameraMaster.getInstance().startAutomaticCapture();
 
-    // VisionThreadMaster.getInstance();
-
-    // start NetworkTables
-    // NetworkTablesThread.getInstance();
+    VisionThreadMaster.getInstance();
 
     /*
      * //EXAMPLE OF THE WIZARDRY **********************

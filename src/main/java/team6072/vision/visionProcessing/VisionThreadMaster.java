@@ -7,57 +7,62 @@ import team6072.vision.cameras.CameraMaster;
 import team6072.vision.logging.LogWrapper;
 import team6072.vision.logging.LoggerConstants;
 import team6072.vision.logging.LogWrapper.FileType;
-import team6072.vision.visionProcessing.pipelines.IntakePipeline;
-import team6072.vision.visionProcessing.pipelines.TurretPipeline;
-import team6072.vision.visionProcessing.updateListeners.IntakeUpdateListener;
-import team6072.vision.visionProcessing.updateListeners.TurretUpdateListener;
+import team6072.vision.visionProcessing.threads.IntakeThread;
+import team6072.vision.visionProcessing.threads.TurretThread;
 
-public class VisionThreadMaster{
+public class VisionThreadMaster {
 
     private LogWrapper mLog;
     private static VisionThreadMaster mPipelineMaster;
-    private ArrayList<VisionThread> mThreads;
+    private ArrayList<VisionThreadBase> mThreads;
 
-    public static VisionThreadMaster getInstance(){
-        if(mPipelineMaster == null){
+    public static VisionThreadMaster getInstance() {
+        if (mPipelineMaster == null) {
             mPipelineMaster = new VisionThreadMaster();
         }
         return mPipelineMaster;
     }
 
-    private VisionThreadMaster(){
-        mLog = new LogWrapper(FileType.PIPELINE, "PipeLine Master", LoggerConstants.PIPELINE_MASTER_PERMISSION);
-        mThreads = new ArrayList<VisionThread>();
+    private VisionThreadMaster() {
+        mLog = new LogWrapper(FileType.VISION_THREAD, "Vision Thread Master",
+                LoggerConstants.VISION_THREAD_MASTER_PERMISSION);
+        mThreads = new ArrayList<VisionThreadBase>();
         mLog.alarm("Starting!");
         startThreads();
     }
 
-    public void startThreads(){
+    public void startThreads() {
         ArrayList<CvSink> sinks = CameraMaster.getInstance().getCameraSinks();
-        // for(CvSink sink : sinks){
-        //     mLog.print(sink.toString());
-        // }
-        if(sinks.size() >= 2){
-            VisionThread thread1 = new VisionThread(sinks.get(0), new TurretPipeline(), new TurretUpdateListener());
-            mThreads.add(thread1);
-            // mThreads.add(new VisionThread(sinks.get(1), new IntakePipeline(), new IntakeUpdateListener()));
-            if(mThreads.get(0) != null){
-                mLog.alarm("THere is an existing thread!");
+
+        if (sinks.size() >= 2) {
+
+            // create Threads
+            TurretThread turretThread = new TurretThread(sinks.get(0));
+            IntakeThread intakeThread = new IntakeThread(sinks.get(1));
+            // add threads to array list
+            mThreads.add(turretThread);
+            mThreads.add(intakeThread);
+            // start threads
+
+            if (mThreads.size() == 0) {
+                mLog.error("THere is NO existing thread!");
+            } else {
+                for (int i = 0; i < mThreads.size(); i++) {
+                    mLog.alarm("Starting Thread " + i + "!");
+                    mThreads.get(i).start();
+                }
             }
-            for(int i = 0; i < mThreads.size(); i++){
-                mLog.alarm("Starting Thread " + i + "!");
-                mThreads.get(i).start();
-            }
+
         } else {
             mLog.error("NOT ENOUGH CAMERAS TO INITIATE VISION THREADS");
         }
     }
 
-    public void killThreads(){
-        for(int i = 0; i < mThreads.size(); i++){
+    public void killThreads() {
+        for (int i = 0; i < mThreads.size(); i++) {
             mThreads.get(i).end();
         }
-        mThreads = new ArrayList<VisionThread>();
+        mThreads = new ArrayList<VisionThreadBase>();
     }
 
 }
