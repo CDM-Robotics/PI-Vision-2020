@@ -5,11 +5,6 @@ import team6072.vision.nt.NetworkTablesThread;
 import team6072.vision.visionProcessing.VisionThreadMaster;
 import team6072.vision.cameras.CameraMaster;
 
-import org.opencv.core.Mat;
-
-import edu.wpi.cscore.CvSource;
-import edu.wpi.first.cameraserver.CameraServer;
-
 public final class Main {
 
   private static LogWrapper mLog;
@@ -48,9 +43,9 @@ public final class Main {
 
     CameraMaster.getInstance();
     NetworkTablesThread.getInstance();
-    // CameraMaster.getInstance().startAutomaticCapture();
-
     VisionThreadMaster.getInstance();
+    
+    // CameraMaster.getInstance().startAutomaticCapture();
 
     /*
      * //EXAMPLE OF THE WIZARDRY **********************

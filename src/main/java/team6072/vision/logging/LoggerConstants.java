@@ -11,12 +11,15 @@ public class LoggerConstants{
 
     // Network Tables //
     public static final Permission NETWORK_TABLES_PERMISSION = Permission.ALL;
+    
 
     // Pipelines //
     public static final Permission VISION_THREAD_MASTER_PERMISSION = Permission.ALL;
 
     // Vision Threads //\
-    public static final Permission VISION_THREAD_PERMISSION = Permission.ALL;
+    public static final Permission VISION_THREAD_PERMISSION = Permission.ERRORS_ONLY;
+
+
 
 
 }
