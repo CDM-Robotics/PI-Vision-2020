@@ -1,4 +1,4 @@
-package team6072.vision.nt.onChangeListeners;
+package team6072.vision.nt;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableValue;
