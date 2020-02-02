@@ -27,8 +27,6 @@ public class VisionThreadMaster {
         mLog = new LogWrapper(FileType.VISION_THREAD, "Vision Thread Master",
                 LoggerConstants.VISION_THREAD_MASTER_PERMISSION);
         mThreads = new ArrayList<VisionThreadBase>();
-        mLog.alarm("Starting!");
-        startThreads();
     }
 
     public void startThreads() {

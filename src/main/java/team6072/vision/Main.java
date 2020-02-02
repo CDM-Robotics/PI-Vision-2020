@@ -44,6 +44,9 @@ public final class Main {
     CameraMaster.getInstance();
     NetworkTablesThread.getInstance();
     VisionThreadMaster.getInstance();
+
+    VisionThreadMaster.getInstance().startThreads();
+    NetworkTablesThread.getInstance().run();
     
     // CameraMaster.getInstance().startAutomaticCapture();
 
@@ -56,14 +59,6 @@ public final class Main {
      * source.putFrame(m); // } // }
      */
 
-    // loop forever
-    for (;;) {
-      try {
-        Thread.sleep(10000);
-      } catch (InterruptedException ex) {
-        return;
-      }
-    }
   }
 }
 

@@ -8,7 +8,6 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import team6072.vision.logging.LogWrapper;
-import team6072.vision.nt.onChangeListeners.NTOnChangeListener;
 import team6072.vision.logging.LoggerConstants;
 import team6072.vision.logging.LogWrapper.FileType;
 
@@ -67,9 +66,6 @@ public class NetworkTablesThread extends Thread {
     // add listeners to array //
     mLog.alarm("Adding Listener");
     mListeners.add(mDistanceListener);
-
-    // run thread //
-    this.start();
   }
 
   public void run() {
